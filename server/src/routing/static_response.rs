@@ -104,6 +104,7 @@ fn mime_type(file_path: &str) -> &'static str {
         Some("json") => "application/json",
         Some("ico") => "image/x-icon",
         Some("svg") => "image/svg+xml",
+        Some("png") => "image/png",
         Some("jpg") => "image/jpeg",
         Some("jpeg") => "image/jpeg",
         _ => {
