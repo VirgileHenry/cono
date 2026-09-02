@@ -8,6 +8,7 @@ pub struct SyncResponse {
 
 /// Response for a new note being created.
 #[derive(serde::Serialize, serde::Deserialize)]
+#[serde(tag = "result")]
 pub enum CreateNoteResponse {
     Ok { note_id: crate::NoteId },
     Error { message: String },
@@ -15,6 +16,7 @@ pub enum CreateNoteResponse {
 
 /// Response to a note edit request.
 #[derive(serde::Serialize, serde::Deserialize)]
+#[serde(tag = "result")]
 pub enum EditNoteResponse {
     Ok,
     Rejected { note_id: crate::NoteId, current_version: u64 },
@@ -23,6 +25,7 @@ pub enum EditNoteResponse {
 
 /// Response for a note being renamed.
 #[derive(serde::Serialize, serde::Deserialize)]
+#[serde(tag = "result")]
 pub enum RenameNoteResponse {
     Ok,
     Error { message: String },
@@ -30,6 +33,7 @@ pub enum RenameNoteResponse {
 
 /// Response to deleting an existing note.
 #[derive(serde::Serialize, serde::Deserialize)]
+#[serde(tag = "result")]
 pub enum DeleteNoteResponse {
     Ok,
     Error { message: String },
@@ -37,6 +41,7 @@ pub enum DeleteNoteResponse {
 
 /// Rsponse of a resync of a single note.
 #[derive(serde::Serialize, serde::Deserialize)]
+#[serde(tag = "result")]
 pub enum ResyncNoteResponse {
     Ok { note: crate::Note },
     Error { message: String },

@@ -1,0 +1,14 @@
+:root {
+    font-family: system-ui, sans-serif;
+    color: #213547;
+    background-color: #fff;
+}
+body {
+    margin: 0;
+}
+button {
+    font: inherit;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: #fafafa;
+}
