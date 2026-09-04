@@ -6,7 +6,7 @@
 
 <main>
     {#if $openNote !== null}
-        <NoteView note={$openNote} />
+        {#key $openNote.id}<NoteView note={$openNote} />{/key}
     {:else}
         <NoteList />
     {/if}

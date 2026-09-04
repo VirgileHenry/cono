@@ -5,7 +5,7 @@ mod redirects;
 mod static_response;
 mod websocket;
 
-pub async fn create(state: crate::state::State) -> anyhow::Result<axum::Router> {
+pub async fn create(state: std::sync::Arc<crate::state::State>) -> anyhow::Result<axum::Router> {
     let span = tracing::info_span!("create_router");
     let _guard = span.enter();
 
@@ -38,7 +38,6 @@ pub async fn create(state: crate::state::State) -> anyhow::Result<axum::Router> 
         router = router.route(&redirect.from, axum::routing::get(redirect_response))
     }
 
-    let state = std::sync::Arc::new(state);
     let router: axum::Router<()> = router.with_state(state);
 
     Ok(router)

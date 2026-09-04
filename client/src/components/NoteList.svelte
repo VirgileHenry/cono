@@ -16,7 +16,7 @@
 </script>
 
 <div class="page">
-    <h1>Notes</h1>
+    <h1>Coño</h1>
     <ul class="note-list">
         {#each $sortedNotes as note (note.id)}
             <NoteListEntry

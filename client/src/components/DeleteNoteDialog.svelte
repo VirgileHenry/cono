@@ -13,7 +13,7 @@
         error = null;
         try {
             const response = await deleteNoteRequest(note.id);
-            if (response.result === "Ok") {
+            if (response.result === "ok") {
                 onclose();
             } else {
                 error = response.message;

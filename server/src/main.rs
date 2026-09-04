@@ -2,6 +2,7 @@ mod config;
 mod entities;
 mod routing;
 mod state;
+mod tasks;
 
 #[tokio::main(flavor = "multi_thread")]
 async fn main() {
@@ -31,8 +32,12 @@ async fn run() -> anyhow::Result<()> {
     let guard = span.enter();
 
     let config = config::Config::new()?;
-    let state = state::State::new(&config).await?;
-    let router = routing::create(state).await?;
+    let state = std::sync::Arc::new(state::State::new(&config).await?);
+    let router = routing::create(state.clone()).await?;
+
+    let cleanup_state = state.clone();
+    tokio::spawn(tasks::delete_old_updates(cleanup_state));
+
     tracing::info!("Successefuly initialized server.");
     drop(guard);
 

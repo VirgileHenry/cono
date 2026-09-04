@@ -13,6 +13,7 @@ pub struct Model {
     #[sea_orm(column_type = "JsonBinary")]
     pub op: Json,
     pub created_at: DateTimeWithTimeZone,
+    pub client_id: Uuid,
 }
 
 #[derive(Copy, Clone, Debug, EnumIter, DeriveRelation)]

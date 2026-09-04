@@ -1,38 +1,22 @@
+pub mod client_message;
 pub mod client_request;
 pub mod server_event;
+pub mod server_message;
 pub mod server_response;
-
-/// Note identifier, a type safe wrapper around uuid.
-#[derive(serde::Serialize, serde::Deserialize)]
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct NoteId(uuid::Uuid);
-
-impl NoteId {
-    pub fn new(note_id: uuid::Uuid) -> Self {
-        Self(note_id)
-    }
-}
-
-impl std::fmt::Display for NoteId {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "Note id: {}", self.0)
-    }
-}
-
-impl Into<uuid::Uuid> for NoteId {
-    fn into(self) -> uuid::Uuid {
-        self.0
-    }
-}
 
 /// A full note as a message to send to the client
 #[derive(serde::Serialize, serde::Deserialize)]
 #[derive(Debug, Clone)]
 pub struct Note {
-    pub id: crate::NoteId,
+    /// Unique identifier for the note.
+    pub id: uuid::Uuid,
+    /// Title of the note.
     pub title: String,
+    /// full content of the note.
     pub content: String,
+    /// Current version of the note.
     pub version: u64,
+    /// Last update time of the note.
     pub updated_at: chrono::DateTime<chrono::Utc>,
 }
 
@@ -41,7 +25,20 @@ pub struct Note {
 #[serde(tag = "op", rename_all = "snake_case")]
 #[derive(Debug, Clone)]
 pub enum NoteEdit {
-    Insert { line: u32, col: u32, text: String },
-    Delete { line: u32, col: u32, len: u32 },
-    ReplaceAll { content: String },
+    /// Insert the given text at the byte index provided by pos.
+    /// pos must point to a valid character bound, or this will be rejected.
+    Insert {
+        /// Byte index in the note's content of the text to add.
+        pos: usize,
+        /// Text to insert in the note content.
+        text: String,
+    },
+    /// Delete the bytes at `[pos..pos+len]`.
+    /// Both boundaries shall be valid character bound, or this will be rejected.
+    Delete {
+        /// Byte index of the text to delete from the note's content.
+        pos: usize,
+        /// Length in bytes of the text to delete from the note's content.
+        len: usize,
+    },
 }

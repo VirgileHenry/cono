@@ -3,9 +3,6 @@ import type {
   CreateNoteResponse,
   DeleteNoteRequest,
   DeleteNoteResponse,
-  EditNoteRequest,
-  EditNoteResponse,
-  NoteEdit,
   NoteId,
   RenameNoteRequest,
   RenameNoteResponse,
@@ -43,16 +40,6 @@ export async function createNoteRequest(
 ): Promise<CreateNoteResponse> {
   const request: CreateNoteRequest = { title };
   return post("/api/v1/create", request);
-}
-
-/** Send a single edit op, applied against `base_version`. */
-export async function editNoteRequest(
-  note_id: NoteId,
-  base_version: number,
-  op: NoteEdit,
-): Promise<EditNoteResponse> {
-  const request: EditNoteRequest = { note_id, base_version, op };
-  return post("/api/v1/edit", request);
 }
 
 /** Rename an existing note. */

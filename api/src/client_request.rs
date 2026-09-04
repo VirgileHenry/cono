@@ -1,4 +1,4 @@
-//! Client to server messages.
+//! Client to server HTTP requests.
 
 /// Resquest a full notes states to the server.
 #[derive(serde::Serialize, serde::Deserialize)]
@@ -7,33 +7,33 @@ pub struct SyncRequest;
 /// Create a new note.
 #[derive(serde::Serialize, serde::Deserialize)]
 pub struct CreateNoteRequest {
+    /// Title of the note to create.
     pub title: String,
-}
-
-/// Request to edit an existing note.
-#[derive(serde::Serialize, serde::Deserialize)]
-pub struct EditNoteRequest {
-    pub note_id: crate::NoteId,
-    pub base_version: u64, // version the client applied this on
-    pub op: crate::NoteEdit,
 }
 
 /// Request to rename an existing note.
 #[derive(serde::Serialize, serde::Deserialize)]
 pub struct RenameNoteRequest {
-    pub note_id: crate::NoteId,
+    /// Id of the note to rename.
+    pub note_id: uuid::Uuid,
+    /// Version of the note we apply our change on.
+    /// If this version is not the last version on the server,
+    /// the client is behind and the request will be rejected.
     pub base_version: u64,
+    /// New note title.
     pub title: String,
 }
 
 /// Request to delete an existing note.
 #[derive(serde::Serialize, serde::Deserialize)]
 pub struct DeleteNoteRequest {
-    pub note_id: crate::NoteId,
+    /// Id of the note to delete.
+    pub note_id: uuid::Uuid,
 }
 
 /// Ask for a full reload of a given note.
 #[derive(serde::Serialize, serde::Deserialize)]
 pub struct ResyncNoteRequest {
-    pub note_id: crate::NoteId,
+    /// Id of the note to resync.
+    pub note_id: uuid::Uuid,
 }

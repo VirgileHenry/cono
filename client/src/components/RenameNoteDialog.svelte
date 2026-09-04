@@ -22,7 +22,7 @@
                 note.version,
                 title.trim(),
             );
-            if (response.result === "Ok") {
+            if (response.result === "ok") {
                 onclose();
             } else {
                 error = response.message;
