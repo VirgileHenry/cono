@@ -2,7 +2,7 @@
     import { tick, onMount } from "svelte";
     import type { Note } from "../lib/protocol";
     import { openNoteId } from "../lib/stores";
-    import { onServerEvent } from "../lib/ws";
+    import { onServerEvent, onReconnect } from "../lib/ws";
     import { EditorState } from "../lib/editor";
 
     let { note }: { note: Note } = $props();

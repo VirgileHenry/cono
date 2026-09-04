@@ -10,4 +10,11 @@ const app = mount(App, {
 /* Connects, syncs on open, resyncs on every reconnect. */
 startWs();
 
+/* Register a service worker for web page as app */
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("/sw.js").catch((e) => {
+    console.warn("service worker registration failed:", e);
+  });
+}
+
 export default app;
